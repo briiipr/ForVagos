@@ -1,0 +1,58 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	template="/WEB-INF/templates/publicTemplate.xhtml"
+	xmlns:p="http://primefaces.org/ui">
+	<ui:define name="content">
+		<div id="content" class="center_content">
+			<h:form>
+				<p:panelGrid columns="3" border="0" layout="tabular"
+					columnClasses="p-col-12 p-md-3 p-xl-2, p-col-12 p-md-9 p-xl-4, p-col-12 p-md-3 p-xl-2, p-col-12 p-md-9 p-xl-4"
+					styleClass="ui-noborder"
+					contentStyleClass="p-align-baseline ui-fluid">
+					<p:selectOneMenu value="#{hotelSearchBean.idProvincia}">
+						<f:selectItem itemValue="-3" itemLabel="Todas las provincias" />
+						<f:selectItems value="#{hotelSearchBean.provincias}"
+							var="provincia" itemLabel="#{provincia.nombre}"
+							itemValue="#{provincia.id}" />
+						<p:ajax update="municipiosSelect"
+							listener="#{hotelSearchBean.cambioProvincia()}" />
+					</p:selectOneMenu>
+					<p:selectOneMenu id="municipiosSelect"
+						value="#{hotelSearchBean.idMunicipio}">
+						<f:selectItem itemValue="-3" itemLabel="Todos los municipios" />
+						<f:selectItems value="#{hotelSearchBean.cambioProvincia()}"
+							var="municipio" itemValue="#{municipio.idMunicipio}"
+							itemLabel="#{municipio.nombre}" />
+					</p:selectOneMenu>
+					<br/>
+					<p:outputLabel id="labelReservaHoy" value="*No permitimos reservar para el día actual"/><p:outputLabel /><p:outputLabel />
+					<p:outputLabel for="fechaEntradaDP" value="Fecha de entrada: " />
+					<p:calendar id="fechaEntradaDP" required="true"
+						value="#{hotelSearchBean.fechaEscogida}" showOn="button"
+						locale="es" monthNavigator="true"
+						mindate="#{hotelSearchBean.fechaMinima}" showButtonPanel="true"
+						navigator="true" styleClass="dateFilter" pattern="dd/MM/yyyy">
+						<p:ajax event="dateSelect"
+							listener="#{hotelSearchBean.cambioFechaEntrada()}"
+							update="fechaSalida" />
+					</p:calendar>
+					<p:message for="fechaEntradaDP" id="msgFechaEntrada" display="icon" />
+					<p:outputLabel for="fechaSalida" value="Fecha de salida: " />
+					<p:calendar id="fechaSalida" required="true"
+						value="#{hotelSearchBean.fechaFinal}" showOn="button" locale="es"
+						monthNavigator="true"
+						mindate="#{hotelSearchBean.fechaMinimaNueva}"
+						showButtonPanel="true"
+						maxdate="#{hotelSearchBean.fechaMaximaNueva}" />
+					<p:message for="fechaSalida" id="msgFechaSalida" display="icon" />
+					<h:commandButton id="buscarHoteles" value="Buscar"
+						action="#{hotelResultsBean.redireccion(hotelSearchBean.idMunicipio, hotelSearchBean.fechaMinima,hotelSearchBean.fechaEscogida,hotelSearchBean.fechaFinal)}" />
+				</p:panelGrid>
+			</h:form>
+			<script src="../resources/js/all.js"></script>
+		</div>
+	</ui:define>
+</ui:composition>

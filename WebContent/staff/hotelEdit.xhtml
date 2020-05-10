@@ -1,0 +1,56 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	template="/WEB-INF/templates/publicTemplate.xhtml"
+	xmlns:p="http://primefaces.org/ui">
+	<ui:define name="content">
+		<p>Editar Hotel</p>
+		<h:form id="form">
+			<p:panelGrid columns="2" border="0" layout="tabular"
+				columnClasses="p-col-12 p-md-3 p-xl-2, p-col-12 p-md-9 p-xl-4, p-col-12 p-md-3 p-xl-2, p-col-12 p-md-9 p-xl-4"
+				styleClass="ui-noborder"
+				contentStyleClass="p-align-baseline ui-fluid">
+				<p:outputLabel for="nombreHotel" value="Nombre: " />
+				<p:inputText id="nombreHotel" required="true"
+					value="#{adminBean.hotelEscogido.name}" />
+				<p:outputLabel for="provinciasSelect" value="Provincia: " />
+				<p:selectOneMenu value="#{adminBean.hotelEscogido.idProvincia}"
+					id="provinciasSelect">
+					<f:selectItems value="#{adminBean.provincias}" var="provincia"
+						itemLabel="#{provincia.nombre}" itemValue="#{provincia.id}" />
+					<p:ajax update="municipiosSelect"
+						listener="#{adminBean.cambioProvincia()}" />
+				</p:selectOneMenu>
+				<p:outputLabel for="municipiosSelect" value="Municipio: " />
+				<p:selectOneMenu id="municipiosSelect"
+					value="#{adminBean.hotelEscogido.idMunicipio}">
+					<f:selectItems value="#{adminBean.cambioProvincia()}"
+						var="municipio" itemValue="#{municipio.idMunicipio}"
+						itemLabel="#{municipio.nombre}" />
+				</p:selectOneMenu>
+				<p:outputLabel for="precioHotel" value="Precio noche: " />
+				<p:inputNumber id="precioHotel" required="true"
+					value="#{adminBean.hotelEscogido.price}" symbol="€"
+					symbolPosition="s" emptyValue="always">
+				</p:inputNumber>
+				<p:outputLabel for="imagenEscoger" value="Escoger imagen (actualmente no es posible subir una imagen): " />
+				<p:selectOneMenu id="imagenEscoger"
+					value="#{adminBean.hotelEscogido.hotelPicture}">
+					<f:selectItems value="#{adminBean.listaImagenes}" var="imagen"
+						itemValue="#{imagen}" itemLabel='#{imagen}' />
+					<p:ajax update="imagenSeleccionada"
+						listener="#{adminBean.cambioImagenEdit()}" />
+				</p:selectOneMenu>
+				<p:outputLabel />
+				<p:graphicImage library="images" id="imagenSeleccionada"
+					name="#{adminBean.cambioImagenEdit()}" />
+				<p:commandButton id="actualizarHotel" value="Actualizar"
+					action="#{adminBean.editHotel()}" />
+				<p:commandButton id="cancelar" value="Cancelar"
+					action="hotelAdmin.xhtml" />
+			</p:panelGrid>
+		</h:form>
+	</ui:define>
+</ui:composition>

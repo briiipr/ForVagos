@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<h:outputStylesheet name="css/default.css" />
+	<h:outputStylesheet name="css/cssLayout.css" />
+	<h:outputStylesheet
+		name="css/fontawesome-free-5.11.2-web/css/all.min.css" />
+	<title>Quiero Vacaciones</title>
+</h:head>
+
+<h:body>
+	<div id="top">
+		<ui:insert name="top">
+			<div style="float: left; width: 20%; margin-top: 70">
+				<p:link outcome="/customer/mycarrito">
+					<h:outputText styleClass="fas fa-shopping-cart" />
+				</p:link>
+				<p:outputLabel id="lblTotal"
+					value="&nbsp;&nbsp;${shoppingCartBean.totalAsString} (${shoppingCartBean.ofertas.size()})">
+				</p:outputLabel>
+			</div>
+			<div style="width: 80%; margin: 0 auto; clear: right;">
+				<h:link outcome="/index.xhtml">
+					<h:graphicImage library="images" name="logoNuevo.png" />
+				</h:link>
+			</div>
+			<div style="float: right; display: inline-flex">
+				<h:form style="width: min-content;">
+					<p:growl id="messages" showDetail="true" />
+					<p:menuButton value="Administración">
+					
+						<p:menuitem value=" Hoteles" action="/staff/hotelAdmin.xhtml?faces-redirect=true"
+							 icon="fas fa-hotel" />
+							<p:separator />
+						<p:menuitem value="Usuarios (pronto)" action="/staff/userAdmin.xhtml?faces-redirect=true"
+							 icon="fas fa-users" disabled="true"/>
+					</p:menuButton>
+				</h:form>
+				<h:form>
+					<p:commandButton action="/customer/newCustomer" value="Regístrate" rendered="#{loginBean.compruebaLogeado() == false}" />
+					<p:commandButton action="/customer/loginCustomer" value="Identifícate" rendered="#{loginBean.compruebaLogeado() == false}" />
+					<p:commandButton action="/customer/profileCustomer" value="Perfil" rendered="#{loginBean.compruebaLogeado() == true}" />
+					<p:commandButton action="/customer/logoutCustomer" value="Salir" rendered="#{loginBean.compruebaLogeado() == true}" />
+				</h:form>
+			</div>
+		</ui:insert>
+		<br /> <br />
+	</div>
+
+	<div id="content" class="center_content">
+		<ui:insert name="content">
+			<h1>Mis vacaciones de lujo</h1>
+			<br />
+			<p:link outcome="/index">
+				<p:graphicImage value="/resources/images/index.jfif" />
+			</p:link>
+			<br />
+			<h:button outcome="/search/index" value="Buscar" />
+		</ui:insert>
+	</div>
+
+	<div id="bottom">
+		<ui:insert name="bottom">Por Brian Pérez Ramos</ui:insert>
+	</div>
+
+</h:body>
+</html>

@@ -1,0 +1,26 @@
+@charset "ISO-8859-1";
+.logo{
+	width: 250px;
+}
+
+.detalles{
+	color: #563aa5;
+}
+
+html,body{
+	font-family: arial;
+}
+
+.ui-menuitem-icon{
+	width: min-content;
+	height: min-content;
+}
+
+#botonAddRedireccion{
+	text-decoration: none !important;
+}
+
+#labelReservaHoy{
+	font-size: 0.4em;
+	font-weight: bold;
+}

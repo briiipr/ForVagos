@@ -1,0 +1,20 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	template="WEB-INF/templates/publicTemplate.xhtml"
+	xmlns:p="http://primefaces.org/ui">
+	<ui:define name="content">
+		<div id="content" class="center_content">
+			<h1>Mis vacaciones de lujo</h1>
+			<br />
+			<h:link outcome="#{masterDataBean.redireccion()}">
+				<h:graphicImage value="/resources/images/index.jfif" />
+			</h:link>
+			<br />
+			<p:staticMessage rendered="#{masterDataBean.estadoConexion() == null}" severity="fatal" summary="ERROR!" detail="No se ha podido conectar con la Base de Datos. Contacte un administrador en admin@forvagosperezb.com" />
+			<p:button outcome="#{masterDataBean.redireccion()}" value="Buscar" />
+		</div>
+	</ui:define>
+</ui:composition>

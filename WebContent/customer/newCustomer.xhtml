@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	template="/WEB-INF/templates/publicTemplate.xhtml"
+	xmlns:p="http://primefaces.org/ui">
+	<ui:define name="content">
+		<h4>Bienvenid@ al registro de usuario. Rellene los campos.</h4>
+		<h:form id="form">
+			<p:panelGrid columns="3" border="0" layout="tabular"
+				columnClasses="p-col-12 p-md-3 p-xl-2, p-col-12 p-md-9 p-xl-4, p-col-12 p-md-3 p-xl-2, p-col-12 p-md-9 p-xl-4"
+				styleClass="ui-noborder"
+				contentStyleClass="p-align-baseline ui-fluid">
+				<p:outputLabel for="nombreCustomer" value="Nombre: " />
+				<p:inputText id="nombreCustomer" required="true"
+					value="#{loginBean.customerInsertar.firstName}" />
+				<p:message for="nombreCustomer" id="msgNombre" display="icon" />
+				<p:outputLabel for="apellidoCustomer" value="Primer apellido: " />
+				<p:inputText id="apellidoCustomer" required="true"
+					value="#{loginBean.customerInsertar.lastName}" />
+				<p:message for="apellidoCustomer" id="msgApellido" display="icon" />
+				<p:outputLabel value="*SU NOMBRE DE USUARIO SERÁ: suNombre.suApellido" /><p:outputLabel /><p:outputLabel />
+				<p:outputLabel for="contraCustomer" value="Contraseña: " />
+				<p:password id="contraCustomer" required="true"
+					match="contraVerificarCustomer"
+					value="#{loginBean.customerInsertar.password}" inline="true" />
+				<p:message for="contraCustomer" id="msgContra1" display="icon" />
+				<p:outputLabel for="contraVerificarCustomer"
+					value="Repita contraseña: " />
+				<p:password id="contraVerificarCustomer" required="true" lang="es"
+					value="#{loginBean.customerInsertar.password}" inline="true" />
+				<p:message for="contraVerificarCustomer" id="msgContra2" display="icon" />
+				<p:outputLabel for="telefonoCustomer" value="Telefono: " />
+				<p:inputText id="telefonoCustomer" required="true"
+					value="#{loginBean.customerInsertar.telefono}" />
+				<p:message for="telefonoCustomer" id="msgTelefono" display="icon" />
+				<p:outputLabel for="emailCustomer" value="Email: " />
+				<p:inputText id="emailCustomer" required="true"
+					value="#{loginBean.customerInsertar.email}" />
+				<p:message for="emailCustomer" id="msgEmail" display="icon" />
+				<p:outputLabel for="fechaNacimientoCustomer"
+					value="Fecha de nacimiento: " />
+				<p:calendar id="fechaNacimientoCustomer" required="true" navigator="true" maxdate="#{loginBean.fechaMaxima}"
+					value="#{loginBean.customerInsertar.fechaNacimiento}" />
+				<p:message for="fechaNacimientoCustomer" id="msgFechaNacimiento" display="icon" />
+				<p:commandButton id="registraCustomer" value="Registrarse"
+					action="#{loginBean.registerCustomer()}" />
+			</p:panelGrid>
+		</h:form>
+	</ui:define>
+</ui:composition>

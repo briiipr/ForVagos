@@ -1,0 +1,70 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	template="/WEB-INF/templates/publicTemplate.xhtml"
+	xmlns:p="http://primefaces.org/ui">
+	<ui:define name="content">
+		<h:form id="form">
+			<p:linkButton id="botonAddRedireccion" outcome="hotelAdd"
+				value="Añadir hotel" />
+			<p:dataTable id="hoteles" var="hotel"
+				value="#{adminBean.listadoHotelesActualizado()}"
+				rowKey="#{hotel.hotelId}" selection="#{adminBean.hotelEscogido}"
+				selectionMode="single" paginator="true"
+				paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				rowsPerPageTemplate="5,10,15">
+				<f:facet name="header">
+            		--&gt;Click derecho en la fila para más opciones&lt;--
+        		</f:facet>
+				<p:column headerText="Id">
+					<h:outputText value="#{hotel.hotelId}" />
+				</p:column>
+				<p:column headerText="Imagen">
+					<p:graphicImage library="images" name="#{hotel.hotelPicture}"
+						style="width: 100px;" />
+				</p:column>
+				<p:column headerText="Nombre">
+					<h:outputText value="#{hotel.name}" />
+				</p:column>
+				<p:column headerText="Precio">
+					<h:outputText value="#{adminBean.formateaNumero(hotel.price)}€" />
+				</p:column>
+			</p:dataTable>
+
+			<p:contextMenu for="hoteles">
+				<p:menuitem value="Detalles" update="hotelDetalles"
+					icon="fas fa-search" oncomplete="PF('hotelDialog').show()" />
+				<p:menuitem value="Editar" icon="far fa-edit"
+					action="hotelEdit.xhtml" />
+				<p:menuitem value="Borrar" update="hoteles" icon="fas fa-times"
+					action="#{adminBean.removeHotel(adminBean.hotelEscogido)}" />
+			</p:contextMenu>
+
+			<p:dialog header="Detalles del Hotel" widgetVar="hotelDialog"
+				modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+				<p:outputPanel id="hotelDetalles" style="text-align:center;">
+					<p:panelGrid columns="2"
+						rendered="#{not empty adminBean.hotelEscogido}"
+						columnClasses="label,value">
+						<f:facet name="header">
+							<p:graphicImage library="images"
+								name="#{adminBean.hotelEscogido.hotelPicture}" />
+						</f:facet>
+
+						<h:outputText value="Id:" />
+						<h:outputText value="#{adminBean.hotelEscogido.hotelId}" />
+
+						<h:outputText value="Nombre:" />
+						<h:outputText value="#{adminBean.hotelEscogido.name}" />
+
+						<h:outputText value="Precio:" />
+						<h:outputText value="#{adminBean.hotelEscogido.price}€" />
+					</p:panelGrid>
+				</p:outputPanel>
+			</p:dialog>
+
+		</h:form>
+	</ui:define>
+</ui:composition>

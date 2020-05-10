@@ -1,0 +1,27 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	template="/WEB-INF/templates/publicTemplate.xhtml"
+	xmlns:p="http://primefaces.org/ui">
+	<ui:define name="content">
+		<h:form>
+			<p:panelGrid columns="2" border="0" layout="tabular"
+				columnClasses="p-col-12 p-md-3 p-xl-2, p-col-12 p-md-9 p-xl-4, p-col-12 p-md-3 p-xl-2, p-col-12 p-md-9 p-xl-4"
+				styleClass="ui-noborder"
+				contentStyleClass="p-align-baseline ui-fluid">
+				<p:outputLabel value="*Recuerde, usuario = suNombre.suApellido" />
+				<p:outputLabel />
+				<p:outputLabel for="userCustomer" value="Usuario: " />
+				<p:inputText id="userCustomer" required="true"
+					value="#{loginBean.customerLogeado.userName}" />
+				<p:outputLabel for="contraCustomer" value="Contraseña: " />
+				<p:password id="contraCustomer" required="true"
+					value="#{loginBean.customerLogeado.password}" inline="true" />
+				<p:commandButton id="registraCustomer" value="Iniciar sesión"
+					action="#{loginBean.customerLogin()}" />
+			</p:panelGrid>
+		</h:form>
+	</ui:define>
+</ui:composition>
